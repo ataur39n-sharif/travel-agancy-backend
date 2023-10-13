@@ -1,0 +1,110 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum EnumRole {
+  user
+  admin
+  superAdmin
+}
+
+enum EnumTourPackageStatus {
+  available
+  notAvailable
+}
+
+enum EnumOrderStatus {
+  pending
+  confirmed
+  processing
+  complete
+  canceled
+  hold
+}
+
+model AuthInfo {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      EnumRole @default(user)
+  userId    String   @unique
+  userInfo  User     @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("auth_info")
+}
+
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  picture   String?
+  bio       String
+  location  String
+  authId    AuthInfo?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  orders    Order[]
+  reviews   Review[]
+
+  @@map("users")
+}
+
+model TourPackage {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  thumbnail   String
+  images      String[]
+  location    String
+  cost        Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      Order[]
+
+  @@map("tour_packages")
+}
+
+model Order {
+  id            String          @id @default(uuid())
+  tourPackageId String
+  tripInfo      TourPackage     @relation(fields: [tourPackageId], references: [id])
+  userId        String
+  userInfo      User            @relation(fields: [userId], references: [id])
+  status        EnumOrderStatus
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+
+  reviews Review[]
+
+  @@map("orders")
+}
+
+model Review {
+  id        String   @id @default(uuid())
+  orderId   String   @unique
+  orderInfo Order    @relation(fields: [orderId], references: [id])
+  userId    String
+  userInfo  User     @relation(fields: [userId], references: [id])
+  ratting   Int
+  comment   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("reviews")
+}
+
+// model User {
+//   id        String   @id @default(uuid())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+// }
