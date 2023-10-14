@@ -48,8 +48,8 @@ model User {
   name      String
   email     String    @unique
   picture   String?
-  bio       String
-  location  String
+  bio       String?
+  location  String?
   authId    AuthInfo?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
