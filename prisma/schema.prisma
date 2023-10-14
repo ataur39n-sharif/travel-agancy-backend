@@ -75,14 +75,18 @@ model TourPackage {
 }
 
 model Order {
-  id            String          @id @default(uuid())
-  tourPackageId String
-  tripInfo      TourPackage     @relation(fields: [tourPackageId], references: [id])
-  userId        String
-  userInfo      User            @relation(fields: [userId], references: [id])
-  status        EnumOrderStatus
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
+  id              String          @id @default(uuid())
+  tourPackageId   String
+  tourPackageInfo TourPackage     @relation(fields: [tourPackageId], references: [id])
+  userId          String
+  userInfo        User            @relation(fields: [userId], references: [id])
+  travelDate      DateTime
+  person          Int
+  child           Int?
+  totalCost       Int
+  status          EnumOrderStatus
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
 
   reviews Review[]
 
