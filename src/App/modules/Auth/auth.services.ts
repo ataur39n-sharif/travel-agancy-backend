@@ -35,7 +35,7 @@ const signUp = async (payload: ISignUpPayload) => {
             }
 
         }
-        const authInfo = await tx.authInfo.create({
+        await tx.authInfo.create({
             data: authData
         })
     })
