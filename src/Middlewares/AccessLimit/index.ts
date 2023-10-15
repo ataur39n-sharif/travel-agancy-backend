@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 import Config from "@/Config";
 import {CustomJwtPayload} from "@/Utils/types/jwtHelper.type";
 
-const AccessOnly = (accessRole: string[]) => catchAsync(async (req: Request, res: Response, next: NextFunction) => {
+const AccessLimit = (accessRole: string[]) => catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const token = req.headers.authorization
     const accessToken = z.string({
         required_error: "Access token is required."
@@ -22,4 +22,4 @@ const AccessOnly = (accessRole: string[]) => catchAsync(async (req: Request, res
     }
 })
 
-export default AccessOnly
+export default AccessLimit

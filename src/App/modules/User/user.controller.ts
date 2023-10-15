@@ -8,7 +8,6 @@ import {Prisma} from "@prisma/client";
 import {UserValidations} from "@/App/modules/User/user.validation";
 
 const allUser = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
-
     const data = await UserServices.users()
 
     sendResponse.success(res, {
@@ -18,7 +17,6 @@ const allUser = catchAsync(async (req: Request, res: Response, next: NextFunctio
     })
 
 })
-
 
 const userInfo = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const id = z.string({
@@ -35,16 +33,15 @@ const userInfo = catchAsync(async (req: Request, res: Response, next: NextFuncti
 
 })
 
-
 const updateInfo = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const id = z.string({
         required_error: 'Id is required.'
     }).parse(req.params.id)
 
     const payload = pickFunction<Prisma.UserUpdateInput, keyof Prisma.UserUpdateInput>(req.body, ['name', 'bio', 'location', 'picture'])
-    const validate = UserValidations.UserUpdateZodSchema.partial().parse(payload)
+    const validateData = UserValidations.UserUpdateZodSchema.partial().parse(payload)
 
-    const data = await UserServices.updateInfo(id, validate)
+    const data = await UserServices.updateInfo(id, validateData)
 
     sendResponse.success(res, {
         statusCode: 200,

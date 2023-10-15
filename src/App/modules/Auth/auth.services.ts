@@ -5,7 +5,7 @@ import {HashHelper} from "@/Utils/helper/hashHelper";
 import {generateToken} from "@/Utils/helper/generateToken";
 import CustomError from "@/Utils/errors/customErrror.class";
 
-const signUp = async (payload: ISignUpPayload) => {
+const createAccount = async (payload: ISignUpPayload) => {
     const oldUser = await prisma.authInfo.findFirst({
         where: {
             email: payload.email
@@ -33,7 +33,6 @@ const signUp = async (payload: ISignUpPayload) => {
                     id: user.id
                 }
             }
-
         }
         await tx.authInfo.create({
             data: authData
@@ -69,6 +68,6 @@ const login = async (payload: ILoginPayload, user?: AuthInfo) => {
 }
 
 export const AuthServices = {
-    signUp,
+    createAccount,
     login,
 }

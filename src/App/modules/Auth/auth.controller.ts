@@ -8,14 +8,14 @@ import {sendResponse} from "@/Utils/helper/sendResponse";
 
 const signUp = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
 
-    const payload = pickFunction<ISignUpPayload, keyof ISignUpPayload>(req.body, ["name", "email", "password", "role"])
+    const payload = pickFunction<ISignUpPayload, keyof ISignUpPayload>(req.body, ["name", "email", "password"])
     const validateData = AuthValidation.SignUpZodSchema.parse({
         ...payload,
         password: String(payload.password),
-        role: payload.role ?? 'user'
+        role: 'user'
     })
 
-    await AuthServices.signUp(validateData)
+    await AuthServices.createAccount(validateData)
     sendResponse.success(res, {
         statusCode: 201,
         message: 'Account registration successful.'
