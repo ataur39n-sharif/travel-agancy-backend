@@ -66,7 +66,7 @@ const updateOrder = catchAsync(async (req: Request, res: Response, next: NextFun
     }).parse(req.params.id)
 
     const payload = pickFunction<IOrder, keyof IOrder>(req.body, [
-        "person", "child", "travelDate", "totalCost", "tourPackageId"
+        "person", "child", "travelDate", "totalCost", "tourPackageId", "status"
     ])
 
     const validatedData = OrderValidation.createOrUpdateZodSchema.partial().parse(payload)
