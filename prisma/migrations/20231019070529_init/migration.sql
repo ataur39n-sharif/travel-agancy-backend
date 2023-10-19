@@ -40,7 +40,6 @@ CREATE TABLE "tour_packages" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "thumbnail" TEXT NOT NULL,
-    "images" TEXT[],
     "location" TEXT NOT NULL,
     "cost" INTEGER NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
