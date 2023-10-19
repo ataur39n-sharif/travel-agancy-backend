@@ -33,7 +33,7 @@ const getSingle = catchAsync(async (req: Request, res: Response, next: NextFunct
 
 const newPackage = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const payload = pickFunction<Prisma.TourPackageCreateInput, keyof Prisma.TourPackageCreateInput>(req.body, [
-        "title", "description", "thumbnail", "images", "location", "cost"
+        "title", "description", "thumbnail", "location", "cost"
     ])
 
     const validateData = TourPackageValidation.createOrUpdatePayload.parse(
@@ -55,7 +55,7 @@ const updatePackage = catchAsync(async (req: Request, res: Response, next: NextF
     }).parse(req.params.id)
 
     const payload = pickFunction<Prisma.TourPackageUpdateInput, keyof Prisma.TourPackageCreateInput>(req.body, [
-        "title", "description", "thumbnail", "images", "location", "cost"
+        "title", "description", "thumbnail", "location", "cost"
     ])
 
     const validateData = TourPackageValidation.createOrUpdatePayload.partial().parse(

@@ -4,7 +4,7 @@ const createOrUpdatePayload = z.object({
     title: z.string(),
     description: z.string(),
     thumbnail: z.string(),
-    images: z.array(z.string()),
+    images: z.array(z.string()).optional(),
     location: z.string(),
     cost: z.number(),
 })

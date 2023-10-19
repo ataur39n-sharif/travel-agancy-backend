@@ -64,7 +64,6 @@ model TourPackage {
   title       String
   description String
   thumbnail   String
-  images      String[]
   location    String
   cost        Int
   createdAt   DateTime @default(now())
